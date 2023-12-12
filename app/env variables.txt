@@ -1,0 +1,5 @@
+set SPOTIPY_CLIENT_ID = 'ecfb5ae0504a4f689098bdcb9d5fec34'
+set SPOTIPY_CLIENT_SECRET = '63f361de7dac40ebbe5fd1325b807db0'
+set SPOTIPY_REDIRECT_URI = 'http://127.0.0.1:8080/'
+set FLASK_ENV=development
+set FLASK_APP = app.py

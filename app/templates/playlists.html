@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>BeatSpotify</title>
+
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- FONT AWESOME JS-->
+<script src="https://use.fontawesome.com/13f75ef5e9.js"></script>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row text-center">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <img class="img-responsive center-block" src="{{url_for('static', filename='img/logo.png')}}">
+                <p style= "color:white; size: 200%;">
+                    Please choose a playlist below to convert into a beat saber playlist:
+                </p>
+                <a class = 'btn btn-danger' href="{{ url_for('sign_out')}}">Sign Out</a>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+
+        {% for playlist_id, playlist_url in playlists %}
+                <div class = "row text-center">
+
+                    <div class="col-8">
+                        <iframe src="{{playlist_url}}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+                        </iframe>
+                    </div>
+
+                    <div class="col-2">
+                        <a class = 'btn btn-success' href="/playlist/{{playlist_id}}">Convert This Playlist</a>
+                    </div>
+
+                    <div class="col-2">
+                    </div>
+
+                </div>
+                <br>
+        {% endfor %}
+
+        
+
+
+
+    </div>
+
+</body>
+</html>

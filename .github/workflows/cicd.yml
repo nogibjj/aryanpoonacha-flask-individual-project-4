@@ -17,5 +17,3 @@ jobs:
         run: make lint
       - name: format
         run: make format
-      - name: deploy
-        run: make deploy

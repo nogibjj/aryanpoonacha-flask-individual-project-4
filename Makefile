@@ -22,4 +22,4 @@ refactor: format lint
 deploy:
 	flask --debug run
 		
-all: install lint test format deploy
+all: install lint test format

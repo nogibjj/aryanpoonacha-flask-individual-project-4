@@ -11,9 +11,18 @@ boto3==1.24.87
 #web
 fastapi==0.85.0
 uvicorn==0.18.3
-#datascience
-transformers
-tensorflow
 
 #web dev
 Flask==2.3.2
+
+#project specific reqs
+tk
+spotipy
+uuid
+requests
+urllib3
+zipfile36
+flask_wtf
+wtforms
+setuptools
+flask_session

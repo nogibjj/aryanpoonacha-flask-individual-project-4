@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>BeatSpotify</title>
+
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- FONT AWESOME JS-->
+<script src="https://use.fontawesome.com/13f75ef5e9.js"></script>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <img class="img-responsive center-block" src="{{url_for('static', filename='img/logo.png')}}">
+                <p style= "color:white; size: 200%;">
+                    Use this website to convert a spotify playlist from your account to a beat saber playlist!
+                </p>
+                <a class = 'btn btn-success' href="{{auth_url}}">Connect Your Spotify<i class="fa-brands fa-spotify"></i></a>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>BeatSpotify</title>
+
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- FONT AWESOME JS-->
+<script src="https://use.fontawesome.com/13f75ef5e9.js"></script>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <img class="img-responsive center-block" src="{{url_for('static', filename='img/logo.png')}}">
+                <a class = 'btn btn-success' href="{{ url_for('playlists')}}">Choose a Different Playlist</a>
+                <a class = 'btn btn-danger' href="{{ url_for('sign_out')}}">Sign Out</a>
+                <br>
+                <p style= "color:white; size: 200%;">
+                    This website uses <a href="https://beatsaver.com/">BeatSaver</a> to match each song by name. Please specify below to change the names that will be used for searching and other parameters:
+                </p>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <p id="pid" style="display:none">{{playlistid}}</p>
+
+
+        <div class="row text-center">
+            <div class="col-1">
+            </div>
+            <div class="col-10">
+                <form id="songsForm" enctype="multipart/form-data" method="POST">>
+
+                    <div class="form-group">
+                        {% for name,number in songs %}
+                        <input name="{{number}}" value ="{{name}}" type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="Song Name">
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-check">
+                      <input name="automapper" type="checkbox" class="form-check-input" id="AICheck">
+                      <label  style="color:white;"class="form-check-label" for="AICheck">Allow AI generated songs (automapper) if no custom maps exist</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="ChromaCheck" name="chroma">
+                        <label style="color:white;" class="form-check-label" for="ChromaCheck">Only include maps that use the Chroma mod</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="CinemaCheck" name="cinema">
+                        <label style="color:white;" class="form-check-label" for="CinemaCheck">Only include maps that use the Cinema mod</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="NoodleCheck" name = 'noodle'>
+                        <label  style="color:white;"style="color:white;" class="form-check-label" for="CinemaCheck">Only include maps that use the Noodle extensions mod</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="CuratedCheck" name = 'curated'>
+                        <label style="color:white;" class="form-check-label" for="CuratedCheck">Only include curated maps</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="CuratedCheck" name = 'ranked'>
+                        <label style="color:white;" class="form-check-label" for="CuratedCheck">Only include ranked maps</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="FullspreadCheck" name="fullSpread">
+                        <label style="color:white;" class="form-check-label" for="FullspreadCheck">Only include maps with a full difficulty options range, i.e, easy to expert+ (fullspread).</label>
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MinBPM" aria-describedby="numberHelp" placeholder="Minimum BPM" name="minBpm">
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MaxBPM" aria-describedby="numberHelp" placeholder="Maximum BPM" name="maxBpm">
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MinRating" aria-describedby="numberHelp" placeholder="Minimum Rating (between 0 and 1)" name="minRating">
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MaxRating" aria-describedby="numberHelp" placeholder="Maximum Rating (between 0 and 1)" name = "maxRating">
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MinDuration" aria-describedby="numberHelp" placeholder="Minimum Duration (in seconds)" name = 'minDuration'>
+                      </div>
+
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="MinDuration" aria-describedby="numberHelp" placeholder="Maximum Duration (in seconds)" name = 'maxDuration'>
+                      </div>
+
+                    <button id="submit" type="submit" class="btn btn-success">Convert To A Beatsaber Playlist!</button>
+                  </form>
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+var form = document.getElementById('songsForm');
+form.onsubmit = function(event){
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData(form);
+        //open the request
+        xhr.open('POST','http://127.0.0.1:8080/conversion')
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        //send the form data
+        xhr.send(JSON.stringify(Object.fromEntries(formData)));
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                form.reset(); //reset form after AJAX success or do something else
+            }
+        }
+        //Fail the onsubmit to avoid page refresh.
+        return false; 
+    }
+
+    console.log("LUL"); 
+    </script>
+
+</body>
+</html>
